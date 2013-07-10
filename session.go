@@ -13,7 +13,7 @@ type Session struct {
 	session *C.sp_session
 }
 
-func NewSession(key string) (Session, interface{}) {
+func NewSession(key string) (Session, error) {
 	session := Session{}
 	appkey := C.CString(key)
 	appkey_size := len(key)
@@ -26,11 +26,12 @@ func NewSession(key string) (Session, interface{}) {
 		application_key:      unsafe.Pointer(appkey),
 		application_key_size: C.size_t(appkey_size)}
 
-	error := C.sp_session_create(&config, &session.session)
-	if error != C.SP_ERROR_OK {
+	error := Error{C.sp_session_create(&config, &session.session)}
+	if error.code != SP_ERROR_OK {
 		return session, error
+	} else {
+		return session, nil
 	}
-	return session, nil
 }
 
 func (s *Session) Login(username string, password string) {

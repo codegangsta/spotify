@@ -50,9 +50,9 @@ type Error struct {
 	code C.sp_error
 }
 
-func (e *Error) Error() string {
-  cmessage := C.sp_error_message(e.code)
-  message := C.GoString(cmessage)
-  C.free(unsafe.Pointer(cmessage))
-  return message
+func (e Error) Error() string {
+	cmessage := C.sp_error_message(e.code)
+	message := C.GoString(cmessage)
+	C.free(unsafe.Pointer(cmessage))
+	return message
 }
