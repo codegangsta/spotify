@@ -3,5 +3,8 @@ package spotify
 import "testing"
 
 func TestError(t *testing.T) {
-  t.Error("Not implemented")
+	err := Error{SP_ERROR_OK}
+  if err.Error() != "sp_error: 0" {
+		t.Error("Error equals " + err.Error())
+	}
 }
