@@ -28,7 +28,7 @@ func NewSession(key string) (Session, interface{}) {
 
 	error := C.sp_session_create(&config, &session.session)
 	if error != C.SP_ERROR_OK {
-		println(C.GoString(C.sp_error_message(error)))
+    return session, error
 	}
 	return session, nil
 }
